@@ -1,5 +1,6 @@
 server:
   port: ${SERVER_PORT}
+spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://${RDS_HOST_NAME}:${RDS_PORT}/bookstore?autoreconnect=true"
