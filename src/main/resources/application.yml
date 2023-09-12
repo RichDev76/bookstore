@@ -7,9 +7,9 @@ spring:
     name: bookstore
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${RDS_HOST_NAME}:${RDS_PORT}/bookstore?autoreconnect=true"
-    username: ${RDS_USER_NAME}
-    password: ${RDS_PASSWORD}
+    url: jdbc:mysql://${RDS_HOST_NAME:localhost}:${RDS_PORT:3306}/bookstore?autoreconnect=true"
+    username: ${RDS_USER_NAME:test}
+    password: ${RDS_PASSWORD:test}
   jpa:
     hibernate:
       ddl-auto: validate
