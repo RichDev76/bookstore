@@ -1,0 +1,7 @@
+server:
+  port: ${SERVER_PORT}
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${RDS_HOST_NAME}:${RDS_PORT}/bookstore?autoreconnect=true"
+    username: ${RDS_USER_NAME}
+    password: ${RDS_PASSWORD}

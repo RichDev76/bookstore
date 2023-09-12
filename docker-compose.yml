@@ -1,0 +1,15 @@
+version: "3"
+services:
+  bookstore:
+    container_name: bookstore
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bookstore
+    ports:
+      - "8090:8090"
+    networks:
+      - bookstore-network
+
+networks:
+  bookstore-network:
