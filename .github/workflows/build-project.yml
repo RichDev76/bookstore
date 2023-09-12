@@ -22,13 +22,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
     - name: Save the artifact
       uses: actions/upload-artifact@master
       with:
         name: bookstore
-        path: bookstore-*.jar
+        path: ./target/bookstore-*.jar
 
 
 
