@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
     private Order processBookOrder(OrderDto order) {
         Customer customer = this.customerService.getCustomerByEmail(order.getCustomerEmail());
         List<LineItem> lineItems = new ArrayList<>();
-        LineItem createdOrderLineItem = null;
+        LineItem createdOrderLineItem;
         BigDecimal orderTotal = new BigDecimal(0);
         for(OrderLineItem orderlineItem : order.getOrderItems()) {
             Book book = this.bookService.getBookByIsbn(orderlineItem.getIsbn());

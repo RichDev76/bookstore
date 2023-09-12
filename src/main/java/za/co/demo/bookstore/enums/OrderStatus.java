@@ -14,5 +14,5 @@ public enum OrderStatus {
     PROBLEM,
     PROCESSING,
     RETURNED,
-    SHIPPED;
+    SHIPPED
 }
