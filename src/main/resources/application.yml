@@ -1,10 +1,20 @@
 server:
-  port: ${SERVER_PORT}
+  port: ${SERVER_PORT:8090}
 spring:
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:default}
   application:
     name: bookstore
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: ${CLIENT_ID:5f57c2ee5bd1b5b8668f}
+            clientSecret: ${CLIENT_SECRET:aeb3e4aa51d173c1216c945d5e8e6526b56d3e8e}
+        provider:
+          github:
+            token-uri: https://github.com/login/oauth/access_token
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://${RDS_HOST_NAME:localhost}:${RDS_PORT:3306}/bookstore?autoreconnect=true"
@@ -25,6 +35,8 @@ spring:
     locations: classpath:db/migration
 logging:
   level:
-    org.springframework.security: TRACE
+    org.springframework.security: INFO
+  file:
+    name: ./logs/online-bookstore.log
 
 

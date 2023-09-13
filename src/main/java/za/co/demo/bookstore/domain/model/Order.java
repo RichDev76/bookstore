@@ -34,7 +34,10 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private Instant orderDate;
 
-    @Column(name = "order_total", nullable = false, precision = 10, scale = 2)
+    @Column(name = "date_updated", nullable = false)
+    private Instant dateUpdated;
+
+    @Column(name = "order_total", nullable = false, precision = 12, scale = 2)
     private BigDecimal orderTotal;
 
     @Enumerated(EnumType.STRING)

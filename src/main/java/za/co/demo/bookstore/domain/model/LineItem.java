@@ -31,7 +31,7 @@ public class LineItem {
     @Column(name = "quantity")
     private Long quantity;
 
-    @Column(name = "order_price", nullable = false, precision = 5, scale = 2)
+    @Column(name = "order_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal orderedPrice;
 
 }

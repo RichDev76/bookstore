@@ -126,7 +126,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(InsufficientStockException.class)
     protected ResponseEntity<Object> handleEntityNotFound(InsufficientStockException ex) {
-        ApiError apiError = new ApiError(BAD_REQUEST);
+        ApiError apiError = new ApiError(INTERNAL_SERVER_ERROR);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }

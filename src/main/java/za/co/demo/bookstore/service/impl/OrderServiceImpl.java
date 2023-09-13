@@ -2,10 +2,7 @@ package za.co.demo.bookstore.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import za.co.demo.bookstore.domain.dto.CompleteOrderDto;
-import za.co.demo.bookstore.domain.dto.OrderDto;
-import za.co.demo.bookstore.domain.dto.OrderLineItem;
-import za.co.demo.bookstore.domain.dto.OrderResponseDto;
+import za.co.demo.bookstore.domain.dto.*;
 import za.co.demo.bookstore.domain.mapper.GenericMapper;
 import za.co.demo.bookstore.domain.model.Book;
 import za.co.demo.bookstore.domain.model.Customer;
@@ -60,8 +57,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order saveOrder(Order order) {
+        return bookOrderRepository.save(order);
+    }
+
+    @Override
     public CompleteOrderDto createBookOrder(OrderDto order) {
         return this.mapper.mapBookOrderToCompletedOrderDto(processBookOrder(order));
+    }
+
+    @Override
+    public OrderResponseDto updateBookOrder(Long orderNumber, OrderUpdateDto orderUpdateDto) {
+        Order order = getBookOrderByOrderNumber(orderNumber);
+        if(orderUpdateDto.getOrderStatus() != null) {
+            order.setOrderStatus(orderUpdateDto.getOrderStatus());
+            order.setDateUpdated(Instant.now());
+        }
+        return mapper.mapOrderToOrderResponseDto(saveOrder(order));
     }
 
     private Order processBookOrder(OrderDto order) {
@@ -78,7 +90,7 @@ public class OrderServiceImpl implements OrderService {
             orderTotal = orderTotal.add(getLineItemTotal(book.getPrice(), orderlineItem.getQuantity()));
         }
 
-        return this.bookOrderRepository.save(buildOrder(customer, lineItems, OrderStatus.CREATED, orderTotal));
+        return saveOrder(buildOrder(customer, lineItems, OrderStatus.CREATED, orderTotal));
     }
 
     private static LineItem createOrderedLineItem(OrderLineItem lineItem, Book book) {

@@ -26,7 +26,7 @@ public class BookDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ISBN(type = ANY)
+    @ISBN(type = ANY, message = "Only valid ISBN-10 and ISBN-13 values allowed")
     private String isbn;
 
     @NotBlank(message = "title cannot be null or empty")
@@ -45,8 +45,9 @@ public class BookDto implements Serializable {
     @NotNull(message = "publication date cannot be null or empty")
     private LocalDate publicationDate;
 
+    @DecimalMin(value = "1", message = "min value is 1")
     private BigDecimal price;
 
-    @Min(value = 0, message = "number of pages must be greater >= 0")
+    @Min(value = 0, message = "quantity must be greater >= 0")
     private Integer quantityInStock;
 }
