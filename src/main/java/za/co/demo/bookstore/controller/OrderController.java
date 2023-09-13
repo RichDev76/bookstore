@@ -10,6 +10,9 @@ import za.co.demo.bookstore.domain.dto.*;
 import za.co.demo.bookstore.service.OrderService;
 import za.co.demo.bookstore.util.Utils;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/bookstore/api/v1")
 @Slf4j
@@ -27,6 +30,15 @@ public class OrderController implements OrderApi {
         log.info(String.format("-- Get Order By OrderNumber -- orderNumber ['%d']",orderNumber));
         return ResponseEntity.ok(orderService.getBookOrderResponseDtoByOrderNumber(orderNumber));
     }
+
+    @GetMapping(path = "/orders/customer")
+    public ResponseEntity<List<OrderResponseDto>> getOrderByCustomerDetails(@RequestParam String emailAddress,
+                                                                            @RequestParam(required = false) String orderDate) {
+        log.info(String.format("-- Get Order By CustomerDetails -- emailAddress ['%s'], orderDate = ['%s']",
+                emailAddress, orderDate));
+        return null;
+    }
+
     @Override
     @PostMapping("/orders")
     public ResponseEntity<?> createBookOrder(@Valid @RequestBody OrderDto bookOrder) {

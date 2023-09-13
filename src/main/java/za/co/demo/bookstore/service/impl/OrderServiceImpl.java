@@ -57,6 +57,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderResponseDto> getBookOrderResponseDtoByCustomerDetails(String customerEmail, String orderDate) {
+        return null;
+    }
+
+    @Override
     public Order saveOrder(Order order) {
         return bookOrderRepository.save(order);
     }
