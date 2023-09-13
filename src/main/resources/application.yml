@@ -10,8 +10,8 @@ spring:
       client:
         registration:
           github:
-            clientId: ${CLIENT_ID:5f57c2ee5bd1b5b8668f}
-            clientSecret: ${CLIENT_SECRET:aeb3e4aa51d173c1216c945d5e8e6526b56d3e8e}
+            clientId: ${CLIENT_ID}
+            clientSecret: ${CLIENT_SECRET}
         provider:
           github:
             token-uri: https://github.com/login/oauth/access_token
