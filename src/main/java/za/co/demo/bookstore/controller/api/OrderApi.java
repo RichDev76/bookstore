@@ -8,9 +8,13 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import za.co.demo.bookstore.domain.dto.OrderDto;
 import za.co.demo.bookstore.domain.dto.OrderResponseDto;
 import za.co.demo.bookstore.domain.dto.OrderUpdateDto;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Tag(name = "Order", description = "The Order Api")
 public interface OrderApi {
@@ -38,10 +42,20 @@ public interface OrderApi {
     ResponseEntity<?> createBookOrder(@Valid @RequestBody OrderDto bookOrder);
 
     @Operation(
+            summary = "gets a customers order details",
+            description = "Gets all orders for a customer or orders for a customer on a specific date")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successfully updated order status"),
+            @ApiResponse(responseCode = "404", description = "no customer found")
+    })
+    ResponseEntity<List<OrderResponseDto>> getOrderByCustomerDetails(@RequestParam String emailAddress,
+                                                                     @RequestParam(required = false) LocalDate orderDate);
+
+    @Operation(
             summary = "update order details",
             description = "Updates the status of the order")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successfully updated order status"),
+            @ApiResponse(responseCode = "200", description = "successfully updated orders retrieved"),
             @ApiResponse(responseCode = "404", description = "no orders found")
     })
     ResponseEntity<OrderResponseDto> updateBook(@PathVariable(value = "orderNumber") Long orderNumber,

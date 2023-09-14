@@ -24,6 +24,7 @@ public class OrderController implements OrderApi {
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
+
     @Override
     @GetMapping(path = "/orders/{orderNumber}")
     public ResponseEntity<OrderResponseDto> getOrderByOrderNumber(@PathVariable long orderNumber) {
@@ -31,12 +32,13 @@ public class OrderController implements OrderApi {
         return ResponseEntity.ok(orderService.getBookOrderResponseDtoByOrderNumber(orderNumber));
     }
 
+    @Override
     @GetMapping(path = "/orders/customer")
     public ResponseEntity<List<OrderResponseDto>> getOrderByCustomerDetails(@RequestParam String emailAddress,
-                                                                            @RequestParam(required = false) String orderDate) {
+                                                                            @RequestParam(required = false) LocalDate orderDate) {
         log.info(String.format("-- Get Order By CustomerDetails -- emailAddress ['%s'], orderDate = ['%s']",
                 emailAddress, orderDate));
-        return null;
+        return ResponseEntity.ok(orderService.getBookOrderResponseDtoByCustomerDetails(emailAddress, orderDate));
     }
 
     @Override

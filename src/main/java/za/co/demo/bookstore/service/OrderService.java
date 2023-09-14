@@ -3,6 +3,7 @@ package za.co.demo.bookstore.service;
 import za.co.demo.bookstore.domain.dto.*;
 import za.co.demo.bookstore.domain.model.Order;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderService {
@@ -13,7 +14,7 @@ public interface OrderService {
 
     OrderResponseDto getBookOrderResponseDtoByOrderNumber(Long orderNumber);
 
-    List<OrderResponseDto> getBookOrderResponseDtoByCustomerDetails(String customerEmail, String orderDate);
+    List<OrderResponseDto> getBookOrderResponseDtoByCustomerDetails(String customerEmail, LocalDate orderDate);
 
     CompleteOrderDto createBookOrder(OrderDto bookOrder);
 

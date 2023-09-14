@@ -20,8 +20,10 @@ import za.co.demo.bookstore.util.Utils;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -57,8 +59,33 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponseDto> getBookOrderResponseDtoByCustomerDetails(String customerEmail, String orderDate) {
-        return null;
+    public List<OrderResponseDto> getBookOrderResponseDtoByCustomerDetails(String customerEmail, LocalDate orderDate) {
+        Customer customer = customerService.getCustomerByEmail(customerEmail);
+        List<Order> orders = new ArrayList<>();
+        if(orderDate != null){
+            System.out.println("orderDate = " + orderDate.toString());
+            orders = getOrdersByCustomerEmailAndOrderDate(orderDate, customer);
+        } else {
+            orders = getOrdersByCustomerEmail(customer);
+        }
+
+        if(orders.isEmpty()) {
+            throw new EntityNotFoundException(Order.class , "customerEmailAddress", customer.getEmail(),
+                    "orderDate", (orderDate!=null?orderDate.toString():"''"));
+        }
+
+        return orders.stream().map(this.mapper::mapOrderToOrderResponseDto).collect(Collectors.toList());
+    }
+
+    private List<Order> getOrdersByCustomerEmail(Customer customer) {
+        return bookOrderRepository.findOrdersByCustomer(customer)
+                .orElseThrow(() -> new EntityNotFoundException(Order.class , "customerEmailAddress", customer.getEmail()));
+    }
+
+    private List<Order> getOrdersByCustomerEmailAndOrderDate(LocalDate orderDate, Customer customer) {
+        return bookOrderRepository.findOrdersByCustomerAndOrderDate(customer.getId(), orderDate)
+                .orElseThrow(() -> new EntityNotFoundException(Order.class , "customerEmailAddress", customer.getEmail(),
+                        "orderDate", orderDate.toString()));
     }
 
     @Override
